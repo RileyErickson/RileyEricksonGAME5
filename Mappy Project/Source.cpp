@@ -102,5 +102,15 @@ int main()
         al_flip_display();
 
     }
+    al_destroy_display(display);
+    display = al_create_display(900, 400 );
+    al_draw_filled_rectangle(0, 0, 900, 400, al_map_rgb(0, 200, 200));
+    if(level == 4)
+        al_draw_textf(W, al_map_rgb(200, 50, 50), 50,200, ALLEGRO_ALIGN_LEFT, " you won with %d seconds left", static_cast<int>(60.0 - al_get_time()));
+    else
+    al_draw_textf(W, al_map_rgb(200, 50, 50), 50, 200, ALLEGRO_ALIGN_LEFT, "you beat %d levels :(  ", level -1);
 
+    al_flip_display();
+    al_rest(5);
+    al_destroy_display(display);
 }
