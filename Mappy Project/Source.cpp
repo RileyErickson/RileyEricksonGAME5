@@ -14,6 +14,7 @@ int main()
     al_init();
     al_install_keyboard();
     al_init_image_addon();
+    al_init_primitives_addon();
     int width = 1248;
     int height = 768;
     ALLEGRO_DISPLAY* display = al_create_display(width, height); 
@@ -78,9 +79,19 @@ int main()
                 break;
             }
         }
-          
         m.drawMaze();
         WizardRat.DrawChar();
+        if (true) {
+            //TL
+            al_draw_filled_circle(WizardRat.getX()+15, WizardRat.getY()+15, 5, al_map_rgb(255, 0, 0));
+            //TR
+            al_draw_filled_circle(WizardRat.getX() + 80, WizardRat.getY() + 15, 5, al_map_rgb(255, 0, 0));
+            //BL
+            al_draw_filled_circle(WizardRat.getX() + 15, WizardRat.getY() + 80, 5, al_map_rgb(255, 0, 0));
+            //BR
+            al_draw_filled_circle(WizardRat.getX() + 80, WizardRat.getY() + 75, 5, al_map_rgb(255, 0, 0));
+
+        }
         al_flip_display();
 
     }
