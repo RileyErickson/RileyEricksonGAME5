@@ -24,20 +24,20 @@ int main()
 
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-    maze m(1);
+    maze* m = new maze(3);
     Character WizardRat;
     WizardRat.InitChar(10, 3 * 92);
     al_start_timer(timer);
     while (true) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
-         if ((keys[UP])&&!(m.getWall(WizardRat.getX(), WizardRat.getY() - 3)))
+         if ((keys[UP])&&!(m->getWall(WizardRat.getX(), WizardRat.getY() - 3)))
             WizardRat.UpdateChar(0, -3, 2);
-         if ((keys[DOWN]) && !(m.getWall(WizardRat.getX(), WizardRat.getY() + 3)))
+         if ((keys[DOWN]) && !(m->getWall(WizardRat.getX(), WizardRat.getY() + 3)))
             WizardRat.UpdateChar(0, 3, 2);
-         if ((keys[LEFT]) &&!(m.getWall(WizardRat.getX()-3, WizardRat.getY()))&&!(WizardRat.getX()-3 <= 0))
+         if ((keys[LEFT]) &&!(m->getWall(WizardRat.getX()-3, WizardRat.getY()))&&!(WizardRat.getX()-3 <= 0))
             WizardRat.UpdateChar(-3, 0, 1);
-         if ((keys[RIGHT])&& !(m.getWall(WizardRat.getX() + 3, WizardRat.getY())) && !(WizardRat.getX() +3 >= 1248))
+         if ((keys[RIGHT])&& !(m->getWall(WizardRat.getX() + 3, WizardRat.getY())) && !(WizardRat.getX() +3 >= 1248))
             WizardRat.UpdateChar(3, 0, 0);
 
         if (ev.type == ALLEGRO_EVENT_TIMER){
@@ -79,7 +79,7 @@ int main()
                 break;
             }
         }
-        m.drawMaze();
+        m->drawMaze();
         WizardRat.DrawChar();
         
       
