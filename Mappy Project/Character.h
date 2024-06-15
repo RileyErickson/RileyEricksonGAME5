@@ -15,7 +15,7 @@ public:
 	int getY();
 	int getX();
 private:
-
+	int counter;
 	float x;
 	float y;
 	bool needToDraw;

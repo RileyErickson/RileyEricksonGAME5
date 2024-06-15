@@ -4,7 +4,7 @@ Character::Character()
 {
 	WizardRat = NULL;
 	needToDraw = true;
-
+	counter = 0;
 }
 Character::~Character()
 {
@@ -18,8 +18,8 @@ void Character::InitChar(int Sx, int Sy)
 
 	curFrame = 0;
 	frameCount = 0;
-	frameWidth = 32 * 6; //frames are 32/32 big, but to prevent pixelazition when exporting they
-	frameHeight = 32 * 6;// are exported 6 times larger then needed
+	frameWidth = 32 * 6; //frames are 32/32 big, but for scaling they are
+	frameHeight = 32 * 6;// are exported 6 times larger then they were made
 
 	//spritemap for the main character
 	WizardRat = al_load_bitmap("RatSheet.png");
@@ -27,10 +27,19 @@ void Character::InitChar(int Sx, int Sy)
 
 
 void Character::UpdateChar(int Mx, int mY, int flip) {
-	curFrame++;
+	//counter slows down the walking cycle so it looks better
+	if (counter <= 4) {
+		counter++;
+	}
+	else {
+		//once the counter triggers we reset it and move to the next frame
+		curFrame++;
+		counter = 0;
+	}
 	if (curFrame >= 10) {
 		curFrame = 0;
 	}
+	//take x and y movement and add it to the cords
 	x += Mx;
 	y += mY;
 	//only valid flags are 0 and 1
@@ -49,7 +58,6 @@ void Character::DrawChar()
 		fy += frameHeight;
 
 	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, x, y, 98, 98, flags);
-	al_flip_display();
 	needToDraw = false;
 
 }
