@@ -1,6 +1,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5\allegro_ttf.h>
 #include "Character.h"
 #include "mappy_A5.h"
 #include <iostream>
@@ -9,18 +11,21 @@
 using namespace std;
 int main()
 {
+    bool done = false;
     bool keys[] = { false, false, false, false };
     enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
     al_init();
     al_install_keyboard();
     al_init_image_addon();
     al_init_primitives_addon();
+    al_init_font_addon();
+    al_init_ttf_addon();
     int width = 1248;
     int height = 768;
     ALLEGRO_DISPLAY* display = al_create_display(width, height); 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
-    
+    ALLEGRO_FONT* W = al_load_font("Starjedi.ttf", 40, 20);
 
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -28,7 +33,7 @@ int main()
     Character WizardRat;
     WizardRat.InitChar(10, 3 * 92);
     al_start_timer(timer);
-    while (true) {
+    while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
          if ((keys[UP])&&!(m->getWall(WizardRat.getX(), WizardRat.getY() - 3)))
@@ -79,9 +84,14 @@ int main()
                 break;
             }
         }
+        if (al_get_time() >= 60) { done = true; }
+        if(WizardRat.getX() + 100 >= 1248) {
+            std::cout << "end of level"<<std::endl;
+        }
         m->drawMaze();
         WizardRat.DrawChar();
-        
+        al_draw_filled_rectangle(96 * 12, 0, 96 * 13, 96, al_map_rgb(0, 0, 0));
+        al_draw_textf(W, al_map_rgb(200, 50, 50), (96 * 12)+ 49, 19, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(60.0 - al_get_time()));
       
         al_flip_display();
 

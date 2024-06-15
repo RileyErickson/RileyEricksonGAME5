@@ -50,14 +50,16 @@ void Character::UpdateChar(int Mx, int mY, int flip) {
 }
 void Character::DrawChar()
 {
+	//position of frame in sprite map
 	int fx = 0;
 	int fy = 0;
+	//converts current frame to a position in the sprite map
 	for (int i = 0; i < curFrame % 5; i++)
 		fx += frameWidth;
 	if (curFrame >= 5)
 		fy += frameHeight;
 
-	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, x, y, 98, 98, flags);
+	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, x, y, 100, 100, flags);
 	needToDraw = false;
 
 }
