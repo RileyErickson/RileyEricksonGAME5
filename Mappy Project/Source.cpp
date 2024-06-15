@@ -86,7 +86,7 @@ int main()
             std::cout << "HIT" << std::endl;
 
         }
-
+        //test
         if (true) {
             //TL
             al_draw_filled_circle(WizardRat.getX()+15, WizardRat.getY()+15, 5, al_map_rgb(255, 0, 0));
