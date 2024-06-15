@@ -11,6 +11,7 @@
 using namespace std;
 int main()
 {
+    int level = 1;
     bool done = false;
     bool keys[] = { false, false, false, false };
     enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
@@ -29,7 +30,7 @@ int main()
 
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-    maze* m = new maze(3);
+    maze* m = new maze(level);
     Character WizardRat;
     WizardRat.InitChar(10, 3 * 92);
     al_start_timer(timer);
@@ -85,8 +86,13 @@ int main()
             }
         }
         if (al_get_time() >= 60) { done = true; }
+        if (level == 4) { done = true; }
         if(WizardRat.getX() + 100 >= 1248) {
             std::cout << "end of level"<<std::endl;
+            level++;
+            WizardRat.InitChar(10, 3 * 92);
+            if(level != 4)
+                m = new maze(level);
         }
         m->drawMaze();
         WizardRat.DrawChar();

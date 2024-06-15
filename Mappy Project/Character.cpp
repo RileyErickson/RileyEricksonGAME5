@@ -2,7 +2,7 @@
 using namespace std;
 Character::Character()
 {
-	WizardRat = NULL;
+	WizardRat = al_load_bitmap("RatSheet.png");;
 	needToDraw = true;
 	counter = 0;
 }
@@ -20,9 +20,6 @@ void Character::InitChar(int Sx, int Sy)
 	frameCount = 0;
 	frameWidth = 32 * 6; //frames are 32/32 big, but for scaling they are
 	frameHeight = 32 * 6;// are exported 6 times larger then they were made
-
-	//spritemap for the main character
-	WizardRat = al_load_bitmap("RatSheet.png");
 }
 
 
