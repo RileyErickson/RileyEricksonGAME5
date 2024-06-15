@@ -76,9 +76,6 @@ int main()
             case ALLEGRO_KEY_RIGHT:
                 keys[RIGHT] = false;
                 break;
-            case ALLEGRO_KEY_SPACE:
-                keys[SPACE] = false;
-                break;
             }
         }
           
