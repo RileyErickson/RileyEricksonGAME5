@@ -4,6 +4,8 @@
 #include "Character.h"
 #include "mappy_A5.h"
 #include <iostream>
+#include "maze.h"
+
 using namespace std;
 int main()
 {
@@ -19,13 +21,9 @@ int main()
      if (MapLoad("level1.fmp", 1))
         return -5;
     Rat.InitChar(100, 0);
-    while (true) {
-        al_clear_to_color(al_map_rgb(100, 100, 100));
-        Rat.UpdateChar(-3, 3, 1);
+    while (true) {        
         MapDrawBG(0, 0, 0, 0, width-1, height-1);
         MapDrawFG(0, 0, 0, 0, width - 1, height - 1, 0);
-
-        Rat.DrawChar();
         al_rest(0.1);
         al_flip_display();
 
