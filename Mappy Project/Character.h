@@ -18,7 +18,7 @@ private:
 
 	float x;
 	float y;
-
+	bool needToDraw;
 	int curFrame;
 	int frameCount;
 	int frameWidth;

@@ -3,13 +3,11 @@
 #include <cstdio> 
 maze::maze(int level)
 {
-	char mp[10];
-	std::sprintf(mp, "level%d.fmp", level);
-	if ((level > 5) && (level > 0))
-		MapLoad("level5.fmp", 1);
-	else
-		MapLoad(mp, 1);
-
+	switch (level) {
+	case(1):MapLoad("level1.fmp", 1);break;
+	case(2):MapLoad("level2.fmp", 1); break;
+	case(3):MapLoad("level3.fmp", 1); break;
+		}
 }
 maze::~maze()
 {

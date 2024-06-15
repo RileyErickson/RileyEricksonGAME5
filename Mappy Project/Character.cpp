@@ -3,6 +3,8 @@ using namespace std;
 Character::Character()
 {
 	WizardRat = NULL;
+	needToDraw = true;
+
 }
 Character::~Character()
 {
@@ -35,6 +37,7 @@ void Character::UpdateChar(int Mx, int mY, int flip) {
 	if (!((flip > 1) || (flip < 0))) {
 		flags = flip;
 	}
+	needToDraw = true;
 }
 void Character::DrawChar()
 {
@@ -47,6 +50,7 @@ void Character::DrawChar()
 
 	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, x, y, 98, 98, flags);
 	al_flip_display();
+	needToDraw = false;
 
 }
 int Character::getX() {
