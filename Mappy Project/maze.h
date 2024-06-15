@@ -10,6 +10,7 @@ private:
 	int location;
 	int charX;
 	int charY;
+	BLKSTR* blockdata;
 public:
 	maze(int level);
 	~maze();
