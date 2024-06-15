@@ -10,6 +10,7 @@ Character::~Character()
 {
 	al_destroy_bitmap(WizardRat);
 }
+//loads the character and data for the sprite map
 void Character::InitChar(int Sx, int Sy)
 {
 	//starting x and y
