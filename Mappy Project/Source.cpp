@@ -82,26 +82,7 @@ int main()
         m.drawMaze();
         WizardRat.DrawChar();
         
-        if (m.getWall(WizardRat.getX(), WizardRat.getY())) {
-            std::cout << "HIT" << std::endl;
-
-        }
-        //test
-        //test
-        //test
-        //test
-        //
-        if (true) {
-            //TL
-            al_draw_filled_circle(WizardRat.getX()+15, WizardRat.getY()+15, 5, al_map_rgb(255, 0, 0));
-            //TR
-            al_draw_filled_circle(WizardRat.getX() + 80, WizardRat.getY() + 15, 5, al_map_rgb(255, 0, 0));
-            //BL
-            al_draw_filled_circle(WizardRat.getX() + 15, WizardRat.getY() + 80, 5, al_map_rgb(255, 0, 0));
-            //BR
-            al_draw_filled_circle(WizardRat.getX() + 80, WizardRat.getY() + 80, 5, al_map_rgb(255, 0, 0));
-
-        }
+      
         al_flip_display();
 
     }
