@@ -3,19 +3,20 @@
 #include <cstdio> 
 maze::maze(int level)
 {
-	MapLoad("level1.fmp", 1);
+	MapLoad("farm.fmp", 1);
 }
-}
+
 maze::~maze()
 {
 
 }
 //draws the maze
-void maze::drawMaze() {
-	MapDrawBG(0, 0, 0, 0, 1248 - 1, 768 - 1);
-	MapDrawFG(0, 0, 0, 0, 1248 - 1, 768 - 1, 0);
+void maze::drawMaze(int x, int y) {
+	MapDrawBG(x, y, 0, 0, 800 - 1, 800 - 1);
+	//MapDrawFG(x-200, y, 0, 0, 800 - 1, 800 - 1, 0);
 }
 bool maze::getWall(int x, int y) {
+	return false;
 	//checks if  any of the 4 corners of the character are in a wall
 	// x and y are the cords of the character
 	//top left

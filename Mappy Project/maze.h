@@ -14,7 +14,7 @@ private:
 public:
 	maze(int level);
 	~maze();
-	void drawMaze();
+	void drawMaze(int x, int y);
 	bool getWall(int x, int y);
 
 };

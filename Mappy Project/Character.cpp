@@ -57,7 +57,7 @@ void Character::DrawChar()
 	if (curFrame >= 5)
 		fy += frameHeight;
 
-	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, x, y, 100, 100, flags);
+	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, 400, 400, 100, 100, flags);
 	needToDraw = false;
 
 }

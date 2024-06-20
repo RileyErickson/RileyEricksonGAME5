@@ -21,8 +21,8 @@ int main()
     al_init_primitives_addon();
     al_init_font_addon();
     al_init_ttf_addon();
-    int width = 1248;
-    int height = 768;
+    int width = 800;
+    int height = 800;
     ALLEGRO_DISPLAY* display = al_create_display(width, height); 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
@@ -31,9 +31,9 @@ int main()
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     maze* m = new maze(level);
-    Character WizardRat;
+    Character SpaceShip;
     //places main character at starting position
-    WizardRat.InitChar(10, 3 * 92);
+    SpaceShip.InitChar(1000-(96 / 2), 1000-(96/2));
     al_start_timer(timer);
     //main game loop
     while (!done) {
@@ -42,14 +42,14 @@ int main()
         //checks if key has been pressed and if there is a wall in the wall
         //2 means dont flip character 1 means face left o means face right
         //corrasponds to allegro flags;
-         if ((keys[UP])&&!(m->getWall(WizardRat.getX(), WizardRat.getY() - 3)))
-            WizardRat.UpdateChar(0, -3, 2);
-         if ((keys[DOWN]) && !(m->getWall(WizardRat.getX(), WizardRat.getY() + 3)))
-            WizardRat.UpdateChar(0, 3, 2);
-         if ((keys[LEFT]) &&!(m->getWall(WizardRat.getX()-3, WizardRat.getY()))&&!(WizardRat.getX()-3 <= 0))
-            WizardRat.UpdateChar(-3, 0, 1);
-         if ((keys[RIGHT])&& !(m->getWall(WizardRat.getX() + 3, WizardRat.getY())) && !(WizardRat.getX() +3 >= 1248))
-            WizardRat.UpdateChar(3, 0, 0);
+         if ((keys[UP])&&(SpaceShip.getY() - 406 > 15))
+            SpaceShip.UpdateChar(0, -6, 2);
+         if ((keys[DOWN]) && (SpaceShip.getY() - 394 < 2070))
+            SpaceShip.UpdateChar(0, 6, 2);
+         if ((keys[LEFT]) &&(SpaceShip.getX() - 406 > 15))
+            SpaceShip.UpdateChar(-6, 0, 1);
+         if ((keys[RIGHT])&& (SpaceShip.getX() - 394 < 2070))
+            SpaceShip.UpdateChar(6, 0, 0);
 
         if (ev.type == ALLEGRO_EVENT_TIMER){
         }
@@ -92,36 +92,16 @@ int main()
             }
         }
         //exit conditions if they run out of time or complte all 4 levels
-        if (al_get_time() >= 60) { done = true; }
-        if (level == 4) { done = true; }
-        //if the rat touches the right side of the screen then they beat that level
-        if(WizardRat.getX() + 100 >= 1248) {
-            level++;
-            //resets the character
-            WizardRat.InitChar(10, 3 * 92);
-            //loads the next level
-            if(level != 4)
-                m = new maze(level);
-        }
+
         //draws the screen
-        m->drawMaze();
-        WizardRat.DrawChar();
+        std::cout << SpaceShip.getX() -400 << "y" <<  SpaceShip.getY() - 400 << std::endl;
+        m->drawMaze(SpaceShip.getX() - 400, SpaceShip.getY() - 400);
+        SpaceShip.DrawChar();
         al_draw_filled_rectangle(96 * 12, 0, 96 * 13, 96, al_map_rgb(0, 0, 0));
         al_draw_textf(W, al_map_rgb(200, 50, 50), (96 * 12)+ 49, 19, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(60.0 - al_get_time()));
       
         al_flip_display();
 
     }
-    //displays final score or how far they got
-    al_destroy_display(display);
-    display = al_create_display(900, 400 );
-    al_draw_filled_rectangle(0, 0, 900, 400, al_map_rgb(0, 200, 200));
-    if(level == 4)
-        al_draw_textf(W, al_map_rgb(200, 50, 50), 50,200, ALLEGRO_ALIGN_LEFT, " you won with %d seconds left", static_cast<int>(60.0 - al_get_time()));
-    else
-    al_draw_textf(W, al_map_rgb(200, 50, 50), 50, 200, ALLEGRO_ALIGN_LEFT, "you beat %d levels :(  ", level -1);
-
-    al_flip_display();
-    al_rest(5);
     al_destroy_display(display);
 }
