@@ -3,12 +3,8 @@
 #include <cstdio> 
 maze::maze(int level)
 {
-	//loads the level needed 
-	switch (level) {
-	case(1):MapLoad("level1.fmp", 1);break;
-	case(2):MapLoad("level2.fmp", 1); break;
-	case(3):MapLoad("level3.fmp", 1); break;
-		}
+	MapLoad("level1.fmp", 1);
+}
 }
 maze::~maze()
 {
