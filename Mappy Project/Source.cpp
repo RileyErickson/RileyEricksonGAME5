@@ -118,7 +118,7 @@ int main()
             displayBeam = al_get_time();
             std::cout << mouse_x << "\n y " << mouse_y << std::endl;
         }
-        else if((displayBeam + 2) < al_get_time()) {
+        else if((displayBeam + 0.2) < al_get_time()) {
             mouse_x = 400;
             mouse_y = 400 ;
             std::cout <<"reset " << std::endl;
@@ -129,7 +129,7 @@ int main()
         al_translate_transform(&camera, -view_x, -view_y);
         al_use_transform(&camera);
 
-
+            
         m->drawMaze(SpaceShip.getX(), SpaceShip.getY(), view_x, view_y);
         //load space ship here later
         al_draw_filled_circle(400 + view_x , 400+ +view_y, 3, al_map_rgb(200, 0, 0));
