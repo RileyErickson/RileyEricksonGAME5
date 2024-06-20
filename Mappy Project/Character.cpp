@@ -25,15 +25,8 @@ void Character::InitChar(int Sx, int Sy)
 
 
 void Character::UpdateChar(int Mx, int mY, int flip) {
-	//counter slows down the walking cycle so it looks better
-	if (counter <= 4) {
-		counter++;
-	}
-	else {
-		//once the counter triggers we reset it and move to the next frame
+	
 		curFrame++;
-		counter = 0;
-	}
 	if (curFrame >= 10) {
 		curFrame = 0;
 	}
@@ -56,8 +49,7 @@ void Character::DrawChar()
 		fx += frameWidth;
 	if (curFrame >= 5)
 		fy += frameHeight;
-
-	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, 400, 400, 100, 100, flags);
+	al_draw_scaled_bitmap(WizardRat, fx, fy, frameWidth, frameHeight, x , y, 100, 100, flags);
 	needToDraw = false;
 
 }

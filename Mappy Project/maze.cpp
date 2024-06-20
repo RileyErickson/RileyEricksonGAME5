@@ -11,8 +11,8 @@ maze::~maze()
 
 }
 //draws the maze
-void maze::drawMaze(int x, int y) {
-	MapDrawBG(x, y, 0, 0, 800 - 1, 800 - 1);
+void maze::drawMaze(int x, int y, int View_x, int View_y) {
+	MapDrawBG( 0, 0, 0, 0, 2880 -1, 2880 - 1);
 	//MapDrawFG(x-200, y, 0, 0, 800 - 1, 800 - 1, 0);
 }
 bool maze::getWall(int x, int y) {
