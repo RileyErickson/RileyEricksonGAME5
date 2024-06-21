@@ -4,7 +4,8 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
 #include <iostream>
-
+//Moo sound effect
+//Moo 2 - Moo Moo the Cow by manofham -- https://freesound.org/s/700379/ -- License: Creative Commons 0
 Cow::Cow() {
 	CSheet = al_load_bitmap("CowSprites.png");
 	std::random_device rd;
