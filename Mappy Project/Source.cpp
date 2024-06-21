@@ -1,8 +1,6 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5\allegro_ttf.h>
 #include "Cow.h"
 #include "mappy_A5.h"
 #include <iostream>
@@ -30,16 +28,14 @@ int main()
     float view_y = 500;
     int mouse_x = 400 + view_x;
     int mouse_y = 400 + view_x;
-    double displayBeam = -10000;
-    ALLEGRO_DISPLAY* display = al_create_display(width, height); 
+    double displayBeam = -1;
+    //+ 100 added for rendering score area
+    ALLEGRO_DISPLAY* display = al_create_display(width, height +100); 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
-    ALLEGRO_FONT* W = al_load_font("Starjedi.ttf", 40, 20);
-    ALLEGRO_TRANSFORM camera;
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_register_event_source(event_queue, al_get_mouse_event_source());
-    //places main character at starting position
     al_start_timer(timer);
     //main game loop
     Render render;
@@ -56,7 +52,7 @@ int main()
         if ((keys[RIGHT])&&(view_x + 6 < 2070))
             view_x += 6;
 
-        //handles movement
+        //handles taking user movement input
         Movement(ev);
         //renders lazer beam
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
@@ -73,8 +69,11 @@ int main()
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             render.RenderFarmUFO(view_x, view_y, mouse_x, mouse_y); \
             render.RenderCows(mouse_x+ +view_x, mouse_y+ view_y);
-
+            render.renderScore(view_x, view_y);
             al_flip_display();
+        }
+        if (render.getAllowedTime() <= 0) {
+            done = true;
         }
     }
     al_destroy_display(display);
@@ -83,16 +82,16 @@ void Movement(ALLEGRO_EVENT ev) {
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
     {
         switch (ev.keyboard.keycode) {
-        case ALLEGRO_KEY_UP:
+        case ALLEGRO_KEY_W:
             keys[UP] = true;
             break;
-        case ALLEGRO_KEY_DOWN:
+        case ALLEGRO_KEY_S:
             keys[DOWN] = true;
             break;
-        case ALLEGRO_KEY_LEFT:
+        case ALLEGRO_KEY_A:
             keys[LEFT] = true;
             break;
-        case ALLEGRO_KEY_RIGHT:
+        case ALLEGRO_KEY_D:
             keys[RIGHT] = true;
             break;
         }
@@ -100,16 +99,16 @@ void Movement(ALLEGRO_EVENT ev) {
     if (ev.type == ALLEGRO_EVENT_KEY_UP) {
         switch (ev.keyboard.keycode)
         {
-        case ALLEGRO_KEY_UP:
+        case ALLEGRO_KEY_W:
             keys[UP] = false;
             break;
-        case ALLEGRO_KEY_DOWN:
+        case ALLEGRO_KEY_S:
             keys[DOWN] = false;
             break;
-        case ALLEGRO_KEY_LEFT:
+        case ALLEGRO_KEY_A:
             keys[LEFT] = false;
             break;
-        case ALLEGRO_KEY_RIGHT:
+        case ALLEGRO_KEY_D:
             keys[RIGHT] = false;
             break;
         }
