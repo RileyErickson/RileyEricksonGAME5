@@ -1,5 +1,6 @@
 #pragma once
 #include "Cow.h"
+#include "Marker.h"
 #include <vector>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
@@ -15,9 +16,9 @@ class Render
 {
 	public:
 		Render();
-		void RenderStart();
+		void RenderStart(ALLEGRO_EVENT_QUEUE* event_queue);
 		void RenderFarmUFO(int view_x, int view_y,int mouse_x,int mouse_y);
-		void RenderCows(int mouse_x, int mouse_y);
+		void RenderCows(int mouse_x, int mouse_y, bool C);
 		double getAllowedTime() { return time; };
 		void renderScore(int view_x, int view_y);
 	private:
@@ -26,11 +27,14 @@ class Render
 		double time;
 		int Gscore;
 		std::vector<Cow> cows;
+		std::vector<Marker> markers;
 		ALLEGRO_TRANSFORM camera;
 		int CowSpawn;
 		ALLEGRO_FONT* F;
 		ALLEGRO_FONT* Timer;
+		ALLEGRO_FONT* StartTXT;
 		ALLEGRO_SAMPLE* moo;
+		ALLEGRO_SAMPLE* collisionSound;
 
 
 

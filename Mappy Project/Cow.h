@@ -19,7 +19,7 @@ private:
 	double Distance;
 	int curFrame;
 	int flag;
-	ALLEGRO_BITMAP* CSheet;
+    ALLEGRO_BITMAP* CSheet;
 	ALLEGRO_BITMAP* frame;
 };
 

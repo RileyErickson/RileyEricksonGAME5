@@ -33,22 +33,28 @@ int main()
     int mouse_x = 400 + view_x;
     int mouse_y = 400 + view_x;
     double displayBeam = -1;
+    bool Collison = true;
     //+ 100 added for rendering score area
     ALLEGRO_DISPLAY* display = al_create_display(width, height +100); 
     ALLEGRO_EVENT_QUEUE* event_queue = al_create_event_queue();
     ALLEGRO_TIMER* timer = al_create_timer(1.0 / 60);
-    al_register_event_source(event_queue, al_get_timer_event_source(timer));
-    al_register_event_source(event_queue, al_get_keyboard_event_source());
-    al_register_event_source(event_queue, al_get_mouse_event_source());
-    al_start_timer(timer);
+
+  
     //sound effect made with https://sfxr.me/
     //background song made with music lab
-    al_reserve_samples(3);
+    al_reserve_samples(4);
     ALLEGRO_SAMPLE* LazerEffect = al_load_sample("explosion.mp3");
     ALLEGRO_SAMPLE* BackGround = al_load_sample("background.wav");
     al_play_sample(BackGround, 0.6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
     //main game loop
     Render render;
+    al_register_event_source(event_queue, al_get_mouse_event_source());
+ 
+    render.RenderStart(event_queue);
+    al_register_event_source(event_queue, al_get_timer_event_source(timer));
+    al_register_event_source(event_queue, al_get_keyboard_event_source());
+    al_start_timer(timer);
+
     while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
@@ -70,16 +76,18 @@ int main()
             mouse_y = ev.mouse.y;
             al_play_sample(LazerEffect, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             displayBeam = al_get_time();
+            Collison = false;
         }
         //handles how long to show lazer beam and resets the lazer if its been long enough
         else if((displayBeam + 0.2) < al_get_time()) {
             mouse_x = 400;
             mouse_y = 400 ;
+            Collison = true;
         }
         //renders all the display objects
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             render.RenderFarmUFO(view_x, view_y, mouse_x, mouse_y); \
-            render.RenderCows(mouse_x+ +view_x, mouse_y+ view_y);
+            render.RenderCows(mouse_x +view_x, mouse_y+ view_y,Collison);
             render.renderScore(view_x, view_y);
             al_flip_display();
         }
