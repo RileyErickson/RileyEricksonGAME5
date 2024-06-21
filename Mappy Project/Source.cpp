@@ -55,6 +55,7 @@ int main()
     al_register_event_source(event_queue, al_get_mouse_event_source());
  
     render.RenderStart(event_queue);
+    al_hide_mouse_cursor(display);
     //adds the rest of the event sources
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
@@ -95,6 +96,7 @@ int main()
             render.RenderFarmUFO(view_x, view_y, mouse_x, mouse_y); \
             render.RenderCows(mouse_x +view_x, mouse_y+ view_y,Collison);
             render.renderScore(view_x, view_y);
+            render.renderAim(view_x, view_y);
             al_flip_display();
         }
         //gets how much time the user has left and sees if they have ran out

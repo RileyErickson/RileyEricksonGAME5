@@ -6,10 +6,6 @@
 		Marker1 = al_load_bitmap("markerClouds.png");
 		Marker2 = al_load_bitmap("marker2.png");
 	}
-	Marker::~Marker() {
-		al_destroy_bitmap(Marker1);
-		al_destroy_bitmap(Marker2);
-	}
 	void Marker::render() {
 		//loads the correct spot we only want the clouds for a split second
 		if (time + .2 > al_get_time()) 

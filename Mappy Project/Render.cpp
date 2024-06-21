@@ -16,7 +16,7 @@ Render::Render() {
 	time = 30 + al_get_time();
 	score = 0;
 }
-Render::Render() {
+Render::~Render() {
 	al_destroy_sample(moo);
 	al_destroy_sample(collisionSound);
 	al_destroy_font(F);
@@ -114,8 +114,14 @@ void Render::renderEnd(int view_x,int view_y) {
 	al_draw_filled_rectangle(0+ view_x, 0+ view_y, 800+ view_x, 900+ view_y, al_map_rgb(50, 50, 50));
 	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 300 + view_y, ALLEGRO_ALIGN_CENTER, "CONGRATS YOU SHOT ");
 	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 400 + view_y, ALLEGRO_ALIGN_CENTER, "%d COWS!", score);
-	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 500 + view_y, ALLEGRO_ALIGN_CENTER, "and %d Challenges", goal/5);
+	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 500 + view_y, ALLEGRO_ALIGN_CENTER, "AND COMPLETED %d CHALLENGES", (goal/5)-1);
 	al_flip_display();
 	al_rest(7);
 
+}
+void Render::renderAim(int view_x, int view_y) {
+	al_get_mouse_state(&mouse_state);
+	al_draw_line(mouse_state.x + view_x-12, mouse_state.y + view_y, mouse_state.x + view_x+12, mouse_state.y + view_y, al_map_rgb(200, 50, 50), 3);
+	al_draw_line(mouse_state.x + view_x, mouse_state.y + view_y - 12, mouse_state.x + view_x, mouse_state.y + view_y + 12, al_map_rgb(200, 50, 50), 3);
+	al_draw_circle(mouse_state.x + view_x, mouse_state.y + view_y,12, al_map_rgb(200, 50, 50), 3);
 }

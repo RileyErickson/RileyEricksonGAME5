@@ -5,6 +5,7 @@ class SpaceShip
 {
 public:
 	SpaceShip();
+	~SpaceShip();
 	void render(int view_x, int view_y);
 private:
 	double rotate;

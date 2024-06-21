@@ -28,11 +28,7 @@ Cow::Cow() {
 	flag = 0;
 	lastFrame = al_get_time();
 }
-Cow::~Cow() {
-	al_destroy_bitmap(CSheet);
-	al_destroy_bitmap(frame);
 
-}
 void Cow::move() {
 	//handles finding the position along the line
 		PosX = x1 + Distance * (x2 - x1);
