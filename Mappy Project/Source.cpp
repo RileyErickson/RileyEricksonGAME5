@@ -8,12 +8,13 @@
 #include <iostream>
 #include "Render.h"
 using namespace std;
+bool keys[] = { false, false, false, false };
+const enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
+void Movement(ALLEGRO_EVENT ev);
 int main()
 {
     int level = 1;
     bool done = false;
-    bool keys[] = { false, false, false, false };
-    enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
     al_init();
     al_install_keyboard();
     al_install_mouse();
@@ -45,76 +46,30 @@ int main()
     while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
-        //checks if key has been pressed and if there is a wall in the wall
-        //2 means dont flip character 1 means face left o means face right
-        //corrasponds to allegro flags;
-        if ((keys[UP])) {
-            if (view_y - 6 > 15)
-                view_y += -6;
-        }
-        if ((keys[DOWN])) {
-            if (view_y + 6 < 2070)
-                view_y += 6;
-        }
-        if ((keys[LEFT])) {
-            if(view_x -6 > 15)
-                view_x += -6;
-        }
-        if ((keys[RIGHT])){
-            if(view_x+ 6 < 2070)
-                view_x += 6;
-        }
+        //checks for movement and then sees if that movement would move past the edge of the screen
+        if ((keys[UP])&& (view_y - 6 > 15))
+            view_y += -6;
+        if ((keys[DOWN])&& (view_y + 6 < 2070)) 
+             view_y += 6;
+        if ((keys[LEFT])&& (view_x - 6 > 15)) 
+             view_x += -6;
+        if ((keys[RIGHT])&&(view_x + 6 < 2070))
+            view_x += 6;
 
-        if (ev.type == ALLEGRO_EVENT_TIMER){
-        }
         //handles movement
-        else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
-        {
-            switch (ev.keyboard.keycode)
-            {
-            case ALLEGRO_KEY_ESCAPE:
-                break;
-            case ALLEGRO_KEY_UP:
-                keys[UP] = true;
-                break;
-            case ALLEGRO_KEY_DOWN:
-                keys[DOWN] = true;
-                break;
-            case ALLEGRO_KEY_LEFT:
-                keys[LEFT] = true;
-                break;
-            case ALLEGRO_KEY_RIGHT:
-                keys[RIGHT] = true;
-                break;
-            }
-        }
-        if (ev.type == ALLEGRO_EVENT_KEY_UP) {
-            switch (ev.keyboard.keycode)
-            {
-            case ALLEGRO_KEY_UP:
-                keys[UP] = false;
-                break;
-            case ALLEGRO_KEY_DOWN:
-                keys[DOWN] = false;
-                break;
-            case ALLEGRO_KEY_LEFT:
-                keys[LEFT] = false;
-                break;
-            case ALLEGRO_KEY_RIGHT:
-                keys[RIGHT] = false;
-                break;
-            }
-        }
+        Movement(ev);
         //renders lazer beam
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             mouse_x = ev.mouse.x;
             mouse_y = ev.mouse.y;
             displayBeam = al_get_time();
         }
+        //handles how long to show lazer beam and resets the lazer if its been long enough
         else if((displayBeam + 0.2) < al_get_time()) {
             mouse_x = 400;
             mouse_y = 400 ;
         }
+        //renders all the display objects
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             render.RenderFarmUFO(view_x, view_y, mouse_x, mouse_y); \
             render.RenderCows(mouse_x+ +view_x, mouse_y+ view_y);
@@ -123,4 +78,40 @@ int main()
         }
     }
     al_destroy_display(display);
+}
+void Movement(ALLEGRO_EVENT ev) {
+    if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+    {
+        switch (ev.keyboard.keycode) {
+        case ALLEGRO_KEY_UP:
+            keys[UP] = true;
+            break;
+        case ALLEGRO_KEY_DOWN:
+            keys[DOWN] = true;
+            break;
+        case ALLEGRO_KEY_LEFT:
+            keys[LEFT] = true;
+            break;
+        case ALLEGRO_KEY_RIGHT:
+            keys[RIGHT] = true;
+            break;
+        }
+    }
+    if (ev.type == ALLEGRO_EVENT_KEY_UP) {
+        switch (ev.keyboard.keycode)
+        {
+        case ALLEGRO_KEY_UP:
+            keys[UP] = false;
+            break;
+        case ALLEGRO_KEY_DOWN:
+            keys[DOWN] = false;
+            break;
+        case ALLEGRO_KEY_LEFT:
+            keys[LEFT] = false;
+            break;
+        case ALLEGRO_KEY_RIGHT:
+            keys[RIGHT] = false;
+            break;
+        }
+    }
 }
