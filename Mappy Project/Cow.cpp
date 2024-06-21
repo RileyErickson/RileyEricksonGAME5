@@ -72,7 +72,5 @@ bool Cow::IsLocation(int x, int y) {
 			return true;
 		}
 	}
-	std::cout << abs(y - (PosY + (96 / 2))) << std::endl;
-
-	return true;
+	return false;
 }

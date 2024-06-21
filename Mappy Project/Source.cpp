@@ -3,12 +3,10 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5\allegro_ttf.h>
-#include "Character.h"
 #include "Cow.h"
 #include "mappy_A5.h"
 #include <iostream>
-#include "maze.h"
-
+#include "Render.h"
 using namespace std;
 int main()
 {
@@ -40,14 +38,10 @@ int main()
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_register_event_source(event_queue, al_get_mouse_event_source());
-    maze* m = new maze(level);
-    Character SpaceShip;
     //places main character at starting position
-    SpaceShip.InitChar(view_x + 400, view_y+ 400);
     al_start_timer(timer);
     //main game loop
-    Cow Cow1;
-    Cow Cow2;
+    Render render;
     while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
@@ -55,22 +49,18 @@ int main()
         //2 means dont flip character 1 means face left o means face right
         //corrasponds to allegro flags;
         if ((keys[UP])) {
-            SpaceShip.UpdateChar(0, -6, 2);
             if (view_y - 6 > 15)
                 view_y += -6;
         }
         if ((keys[DOWN])) {
-            SpaceShip.UpdateChar(0, 6, 2);
             if (view_y + 6 < 2070)
                 view_y += 6;
         }
         if ((keys[LEFT])) {
-            SpaceShip.UpdateChar(-6, 0, 1);
             if(view_x -6 > 15)
                 view_x += -6;
         }
         if ((keys[RIGHT])){
-            SpaceShip.UpdateChar(6, 0, 0);
             if(view_x+ 6 < 2070)
                 view_x += 6;
         }
@@ -120,31 +110,14 @@ int main()
             mouse_x = ev.mouse.x;
             mouse_y = ev.mouse.y;
             displayBeam = al_get_time();
-            Cow1.IsLocation(mouse_x+ view_x, mouse_y+ view_y);
-            Cow2.IsLocation(mouse_x + view_x, mouse_y+ view_y);
         }
         else if((displayBeam + 0.2) < al_get_time()) {
             mouse_x = 400;
             mouse_y = 400 ;
         }
         if (ev.type == ALLEGRO_EVENT_TIMER) {
-            //handles scrolling the screen
-            al_identity_transform(&camera);
-            al_translate_transform(&camera, -view_x, -view_y);
-            al_use_transform(&camera);
-
-            //Draws the Farm
-            m->drawMaze();
-            //load space ship here later
-            al_draw_filled_circle(400 + view_x, 400 + +view_y, 3, al_map_rgb(200, 0, 0));
-            al_draw_line(400 + view_x, 400 + view_y, mouse_x + view_x, mouse_y + view_y, al_map_rgb(200, 0, 0), 3);
-            //SpaceShip.DrawChar();
-
-            //draws cows
-            Cow1.move();
-            Cow2.move();
-            al_draw_filled_rectangle(96 * 12, 0, 96 * 13, 96, al_map_rgb(0, 0, 0));
-            al_draw_textf(W, al_map_rgb(200, 50, 50), (96 * 12) + 49, 19, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(60.0 - al_get_time()));
+            render.RenderFarmUFO(view_x, view_y, mouse_x, mouse_y); \
+            render.RenderCows(mouse_x+ +view_x, mouse_y+ view_y);
 
             al_flip_display();
         }
