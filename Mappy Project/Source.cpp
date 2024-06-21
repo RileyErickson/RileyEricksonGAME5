@@ -128,26 +128,27 @@ int main()
             std::cout <<"reset " << std::endl;
 
         }
-       //handles scrolling the screen
-        al_identity_transform(&camera);
-        al_translate_transform(&camera, -view_x, -view_y);
-        al_use_transform(&camera);
+        if (ev.type == ALLEGRO_EVENT_TIMER) {
+            //handles scrolling the screen
+            al_identity_transform(&camera);
+            al_translate_transform(&camera, -view_x, -view_y);
+            al_use_transform(&camera);
 
-            
-        m->drawMaze(SpaceShip.getX(), SpaceShip.getY(), view_x, view_y);
-        //load space ship here later
-        al_draw_filled_circle(400 + view_x , 400+ +view_y, 3, al_map_rgb(200, 0, 0));
-        al_draw_line(400 + view_x, 400 + view_y, mouse_x + view_x, mouse_y + view_y, al_map_rgb(200, 0, 0), 3);
-        //SpaceShip.DrawChar();
 
-        //draws cows
-        Cow1.move();
-        Cow2.move();
-        al_draw_filled_rectangle(96 * 12, 0, 96 * 13, 96, al_map_rgb(0, 0, 0));
-        al_draw_textf(W, al_map_rgb(200, 50, 50), (96 * 12)+ 49, 19, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(60.0 - al_get_time()));
-      
-        al_flip_display();
+            m->drawMaze(SpaceShip.getX(), SpaceShip.getY(), view_x, view_y);
+            //load space ship here later
+            al_draw_filled_circle(400 + view_x, 400 + +view_y, 3, al_map_rgb(200, 0, 0));
+            al_draw_line(400 + view_x, 400 + view_y, mouse_x + view_x, mouse_y + view_y, al_map_rgb(200, 0, 0), 3);
+            //SpaceShip.DrawChar();
 
+            //draws cows
+            Cow1.move();
+            Cow2.move();
+            al_draw_filled_rectangle(96 * 12, 0, 96 * 13, 96, al_map_rgb(0, 0, 0));
+            al_draw_textf(W, al_map_rgb(200, 50, 50), (96 * 12) + 49, 19, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(60.0 - al_get_time()));
+
+            al_flip_display();
+        }
     }
     al_destroy_display(display);
 }

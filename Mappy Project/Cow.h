@@ -1,4 +1,6 @@
 #pragma once
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
 class Cow
 {
 public:
@@ -15,5 +17,9 @@ private:
 	bool up;
 	double MovePercent;
 	double Distance;
+	int curFrame;
+	int flag;
+	ALLEGRO_BITMAP* CSheet;
+	ALLEGRO_BITMAP* frame;
 };
 
