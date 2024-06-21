@@ -120,13 +120,12 @@ int main()
             mouse_x = ev.mouse.x;
             mouse_y = ev.mouse.y;
             displayBeam = al_get_time();
-            std::cout << mouse_x << "\n y " << mouse_y << std::endl;
+            Cow1.IsLocation(mouse_x+ view_x, mouse_y+ view_y);
+            Cow2.IsLocation(mouse_x + view_x, mouse_y+ view_y);
         }
         else if((displayBeam + 0.2) < al_get_time()) {
             mouse_x = 400;
             mouse_y = 400 ;
-            std::cout <<"reset " << std::endl;
-
         }
         if (ev.type == ALLEGRO_EVENT_TIMER) {
             //handles scrolling the screen
@@ -134,8 +133,8 @@ int main()
             al_translate_transform(&camera, -view_x, -view_y);
             al_use_transform(&camera);
 
-
-            m->drawMaze(SpaceShip.getX(), SpaceShip.getY(), view_x, view_y);
+            //Draws the Farm
+            m->drawMaze();
             //load space ship here later
             al_draw_filled_circle(400 + view_x, 400 + +view_y, 3, al_map_rgb(200, 0, 0));
             al_draw_line(400 + view_x, 400 + view_y, mouse_x + view_x, mouse_y + view_y, al_map_rgb(200, 0, 0), 3);

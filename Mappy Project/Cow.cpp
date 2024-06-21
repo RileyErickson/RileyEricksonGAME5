@@ -3,6 +3,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_image.h>
+#include <iostream>
 
 Cow::Cow() {
 	CSheet = al_load_bitmap("CowSheet.png");
@@ -65,5 +66,13 @@ void Cow::move() {
 
 }
 bool Cow::IsLocation(int x, int y) {
+	if ( 90 > abs(x - (PosX+(96/2)))) {
+		if (90 > abs(y - (PosY + (96 / 2)))) {
+			std::cout << "HIT" << std::endl;
+			return true;
+		}
+	}
+	std::cout << abs(y - (PosY + (96 / 2))) << std::endl;
+
 	return true;
 }

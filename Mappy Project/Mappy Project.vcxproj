@@ -87,6 +87,7 @@
     <ClCompile Include="Cow.cpp" />
     <ClCompile Include="mappy_A5.c" />
     <ClCompile Include="maze.cpp" />
+    <ClCompile Include="Render.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +95,7 @@
     <ClInclude Include="Cow.h" />
     <ClInclude Include="mappy_A5.h" />
     <ClInclude Include="maze.h" />
+    <ClInclude Include="Render.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
