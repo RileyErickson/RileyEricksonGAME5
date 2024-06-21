@@ -13,7 +13,7 @@ const enum KEYS { UP, DOWN, LEFT, RIGHT, SPACE };
 void Movement(ALLEGRO_EVENT ev);
 int main()
 {
-    int level = 1;
+    //allegro setup
     bool done = false;
     al_init();
     al_install_keyboard();
@@ -24,6 +24,7 @@ int main()
     al_init_ttf_addon();
     al_install_audio();
     al_init_acodec_addon();
+    //screen/mouse values
     int width = 800;
     int height = 800;
     int REAL_W = 2880;
@@ -43,18 +44,21 @@ int main()
     //sound effect made with https://sfxr.me/
     //background song made with music lab
     al_reserve_samples(4);
+    //loads background music+ lazer effect
     ALLEGRO_SAMPLE* LazerEffect = al_load_sample("explosion.mp3");
     ALLEGRO_SAMPLE* BackGround = al_load_sample("background.wav");
+   //starts background music
     al_play_sample(BackGround, 0.6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
     //main game loop
     Render render;
+    //registers mouse events for renderStart
     al_register_event_source(event_queue, al_get_mouse_event_source());
  
     render.RenderStart(event_queue);
+    //adds the rest of the event sources
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_start_timer(timer);
-
     while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
@@ -67,18 +71,20 @@ int main()
              view_x += -6;
         if ((keys[RIGHT])&&(view_x + 6 < 2070))
             view_x += 6;
-
+      
         //converts user keyboard input
         Movement(ev);
+
         //records lazer beam location/plays sound effect
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             mouse_x = ev.mouse.x;
             mouse_y = ev.mouse.y;
             al_play_sample(LazerEffect, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             displayBeam = al_get_time();
+            //used for playing Collison sound affect in RenderCows 
             Collison = false;
         }
-        //handles how long to show lazer beam and resets the lazer if its been long enough
+        //handles how long to show lazer beam is shown and resets the lazer if its been long enough
         else if((displayBeam + 0.2) < al_get_time()) {
             mouse_x = 400;
             mouse_y = 400 ;
@@ -91,10 +97,13 @@ int main()
             render.renderScore(view_x, view_y);
             al_flip_display();
         }
+        //gets how much time the user has left and sees if they have ran out
+        //if they have then the game exits
         if (render.getAllowedTime() - al_get_time() <= 0) {
             done = true;
         }
     }
+    render.renderEnd(view_x, view_y);
     al_destroy_display(display);
 }
 void Movement(ALLEGRO_EVENT ev) {

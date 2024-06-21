@@ -11,6 +11,7 @@ Cow::Cow() {
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(100, 2700);
 	//the two ends of the line the cow will move in
+	//longer the line the faster the cow will move
 	x1 = dis(gen);
 	y1 = dis(gen);
 	x2 = dis(gen);
@@ -18,11 +19,14 @@ Cow::Cow() {
 	//position of the cow
 	PosX = x1;
 	PosY = y1;
+	//used for moving the cow up and down its line
 	MovePercent = 0.001;
 	Distance = 0;
+	//which way to render the cow 
 	up = true;
 	curFrame = 0;
 	flag = 0;
+	lastFrame = al_get_time();
 }
 void Cow::move() {
 	//handles finding the position along the line
@@ -30,29 +34,28 @@ void Cow::move() {
 		PosY = y1 + Distance * (y2 - y1);
 		if (up) {
 			Distance += MovePercent;
-			if (Distance >= 1.0) {
-				Distance = 1.0;
+			if (Distance >= 1.0) 
 				up = false;
-			}
 		}
 		else if (!up) {
 			Distance -= MovePercent;
-			if (Distance <= 0.0) {
-				Distance = 0.0;
+			if (Distance <= 0.0)
 				up = true;	
-			}
+	
 		}
-	if(counter > 10)
-		//handles finding the cow
-		curFrame++;
-	if (curFrame >= 10) {
-		curFrame = 0;
+		//slows down the animation
+		if (al_get_time() > lastFrame + 0.2) {
+			curFrame++;
+			lastFrame = al_get_time();
+		}
+	if (curFrame > 8) {
+		curFrame = 1;
 	}
 	int fx = 0;
 	int fy = 0;
-	for (int i = 0; i < curFrame % 5; i++)
+	for (int i = 0; i < curFrame % 4; i++)
 		fx += 96;
-	if (curFrame >= 5)
+	if (curFrame >= 4)
 		fy += 96;
 
 	if (!up) {flag = ALLEGRO_FLIP_VERTICAL; }

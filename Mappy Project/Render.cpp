@@ -94,3 +94,12 @@ void Render::renderScore(int view_x, int view_y) {
 
 
 }
+void Render::renderEnd(int view_x,int view_y) {
+	al_draw_filled_rectangle(0+ view_x, 0+ view_y, 800+ view_x, 900+ view_y, al_map_rgb(50, 50, 50));
+	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 300 + view_y, ALLEGRO_ALIGN_CENTER, "CONGRATS YOU SHOT ");
+	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 400 + view_y, ALLEGRO_ALIGN_CENTER, "%d COWS!", score);
+	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 500 + view_y, ALLEGRO_ALIGN_CENTER, "GREAT JOB");
+	al_flip_display();
+	al_rest(7);
+
+}

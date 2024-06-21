@@ -19,6 +19,7 @@ class Render
 		Render();
 		void RenderStart(ALLEGRO_EVENT_QUEUE* event_queue);
 		void RenderFarmUFO(int view_x, int view_y,int mouse_x,int mouse_y);
+		void renderEnd(int view_x, int view_y);
 		void RenderCows(int mouse_x, int mouse_y, bool C);
 		double getAllowedTime() { return time; };
 		void renderScore(int view_x, int view_y);

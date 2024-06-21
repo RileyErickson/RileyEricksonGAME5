@@ -17,6 +17,7 @@ private:
 	bool up;
 	double MovePercent;
 	double Distance;
+	double lastFrame;
 	int curFrame;
 	int flag;
     ALLEGRO_BITMAP* CSheet;
