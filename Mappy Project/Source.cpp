@@ -4,6 +4,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5\allegro_ttf.h>
 #include "Character.h"
+#include "Cow.h"
 #include "mappy_A5.h"
 #include <iostream>
 #include "maze.h"
@@ -45,6 +46,8 @@ int main()
     SpaceShip.InitChar(view_x + 400, view_y+ 400);
     al_start_timer(timer);
     //main game loop
+    Cow Cow1;
+    Cow Cow2;
     while (!done) {
         ALLEGRO_EVENT ev;
         al_wait_for_event(event_queue, &ev);
@@ -112,6 +115,7 @@ int main()
                 break;
             }
         }
+        //renders lazer beam
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             mouse_x = ev.mouse.x;
             mouse_y = ev.mouse.y;
@@ -135,6 +139,10 @@ int main()
         al_draw_filled_circle(400 + view_x , 400+ +view_y, 3, al_map_rgb(200, 0, 0));
         al_draw_line(400 + view_x, 400 + view_y, mouse_x + view_x, mouse_y + view_y, al_map_rgb(200, 0, 0), 3);
         //SpaceShip.DrawChar();
+
+        //draws cows
+        Cow1.move();
+        Cow2.move();
         al_draw_filled_rectangle(96 * 12, 0, 96 * 13, 96, al_map_rgb(0, 0, 0));
         al_draw_textf(W, al_map_rgb(200, 50, 50), (96 * 12)+ 49, 19, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(60.0 - al_get_time()));
       
