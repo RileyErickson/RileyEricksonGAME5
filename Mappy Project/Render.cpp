@@ -16,6 +16,13 @@ Render::Render() {
 	time = 30 + al_get_time();
 	score = 0;
 }
+Render::Render() {
+	al_destroy_sample(moo);
+	al_destroy_sample(collisionSound);
+	al_destroy_font(F);
+	al_destroy_font(StartTXT);
+	al_destroy_font(Timer);
+}
 void Render::RenderFarmUFO(int view_x, int view_y, int mouse_x, int mouse_y) {
 	//handles scrolling the screen
 	al_identity_transform(&camera);
@@ -46,15 +53,20 @@ void Render::RenderCows(int mouse_x, int mouse_y, bool Coll) {
 	//checks if any cows have been ran over or shot.
 	for (Cow& C : cows) {
 		if (C.IsLocation(mouse_x, mouse_y)) {
+			//erases the hit cow
 			cows.erase(cows.begin() + loc);
+			//updates the score and gives the player 1 extra second per cow hit.
 			score++;
 			Gscore++;
 			time++;
+			//if there was a hit we add the marker for it
 			markers.push_back(Marker(mouse_x, mouse_y));
 			//plays sound if collision with ship
-			if(Coll){
+			if(Coll)
 				al_play_sample(collisionSound, 0.9, 0.0, 0.8, ALLEGRO_PLAYMODE_ONCE, NULL);
-			}
+			
+			//if a goal is completed then we want to increase the goal for the next round and then give
+			//the player their bonus time.
 			if (Gscore == goal) {
 				Gscore = 0;
 				goal += 5;
@@ -69,6 +81,7 @@ void Render::RenderCows(int mouse_x, int mouse_y, bool Coll) {
 }
 void Render::RenderStart(ALLEGRO_EVENT_QUEUE* event_queue) {
 ALLEGRO_EVENT ev;
+//draws the start Screen
 al_draw_filled_rectangle(0 , 0 , 800 , 900, al_map_rgb(50, 100, 100));
 al_draw_textf(Timer, al_map_rgb(200, 20, 20), 400, 200, ALLEGRO_ALIGN_CENTER, "COW SHOOTER");
 al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400, 300, ALLEGRO_ALIGN_CENTER, "SHOOT COWS TO GAIN MORE TIME");
@@ -77,16 +90,18 @@ al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400, 500, ALLEGRO_ALIGN_CENTE
 al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400, 600, ALLEGRO_ALIGN_CENTER, "GETS YOU 5 EXTRA SECONDS");
 al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400, 700, ALLEGRO_ALIGN_CENTER, "CLICK ANYWHERE TO START");
 al_flip_display();
+//waits till the user clicks to the screen
 while (true) {
 	al_wait_for_event(event_queue, &ev);
 	if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
 		break;
 	}
 }
+//resets time to ensure its update before the gameplay begins
 time = 30 + al_get_time();
 }
 void Render::renderScore(int view_x, int view_y) {
-
+	//renders the score board on the bottom of the screen
 	al_draw_filled_rectangle(0 + view_x, 800 + view_y, 800 + view_x, 900 + view_y, al_map_rgb(50, 50, 50));
 	al_draw_textf(Timer, al_map_rgb(255, 40, 40), 400 + view_x, 820 +view_y, ALLEGRO_ALIGN_CENTER, "%d", static_cast<int>(time- al_get_time()) );
 	al_draw_textf(F, al_map_rgb(255, 255, 255), 5 + view_x, 840 + view_y, ALLEGRO_ALIGN_LEFT, "Bonus: %d/%d",Gscore, goal);
@@ -94,11 +109,12 @@ void Render::renderScore(int view_x, int view_y) {
 
 
 }
+//renders the score on the bottem of the screen
 void Render::renderEnd(int view_x,int view_y) {
 	al_draw_filled_rectangle(0+ view_x, 0+ view_y, 800+ view_x, 900+ view_y, al_map_rgb(50, 50, 50));
 	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 300 + view_y, ALLEGRO_ALIGN_CENTER, "CONGRATS YOU SHOT ");
 	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 400 + view_y, ALLEGRO_ALIGN_CENTER, "%d COWS!", score);
-	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 500 + view_y, ALLEGRO_ALIGN_CENTER, "GREAT JOB");
+	al_draw_textf(StartTXT, al_map_rgb(255, 255, 255), 400 + view_x, 500 + view_y, ALLEGRO_ALIGN_CENTER, "and %d Challenges", goal/5);
 	al_flip_display();
 	al_rest(7);
 

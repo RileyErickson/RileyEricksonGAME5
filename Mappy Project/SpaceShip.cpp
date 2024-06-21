@@ -5,6 +5,9 @@ SpaceShip::SpaceShip() {
 	scale = 1;
 	ScaleDir = true;
 }
+SpaceShip::~SpaceShip() {
+	al_destroy_bitmap(UFO);
+}
 void SpaceShip::render(int view_x, int view_y) {
 	if(ScaleDir) {
 		scale += 0.05/4;

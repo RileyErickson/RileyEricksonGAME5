@@ -105,6 +105,8 @@ int main()
     }
     render.renderEnd(view_x, view_y);
     al_destroy_display(display);
+    al_destroy_sample(LazerEffect);
+    al_destroy_sample(BackGround);
 }
 void Movement(ALLEGRO_EVENT ev) {
     if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
