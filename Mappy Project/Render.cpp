@@ -26,8 +26,9 @@ void Render::RenderFarmUFO(int view_x, int view_y, int mouse_x, int mouse_y) {
 	for (Marker& M : markers)
 		M.render();
 	//test UFO/LAZER UFO will be replaced with real class later just a reference point for rn
-	al_draw_filled_circle(400 + view_x, 400 + +view_y, 3, al_map_rgb(200, 0, 0));
 	al_draw_line(400 + view_x, 400 + view_y, mouse_x + view_x, mouse_y + view_y, al_map_rgb(200, 0, 0), 3);
+	ship.render(view_x, view_y);
+
 }
 void Render::RenderCows(int mouse_x, int mouse_y, bool Coll) {
 	std::random_device rd;

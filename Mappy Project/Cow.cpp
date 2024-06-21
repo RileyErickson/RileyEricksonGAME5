@@ -6,7 +6,7 @@
 #include <iostream>
 
 Cow::Cow() {
-	CSheet = al_load_bitmap("CowSheet.png");
+	CSheet = al_load_bitmap("CowSprites.png");
 	std::random_device rd;
 	std::mt19937 gen(rd());
 	std::uniform_int_distribution<> dis(100, 2700);
@@ -42,6 +42,7 @@ void Cow::move() {
 				up = true;	
 			}
 		}
+	if(counter > 10)
 		//handles finding the cow
 		curFrame++;
 	if (curFrame >= 10) {

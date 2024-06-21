@@ -68,7 +68,7 @@ int main()
         if ((keys[RIGHT])&&(view_x + 6 < 2070))
             view_x += 6;
 
-        //handles taking user movement input
+        //converts user keyboard input
         Movement(ev);
         //records lazer beam location/plays sound effect
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {

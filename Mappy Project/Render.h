@@ -12,6 +12,7 @@
 #include "mappy_A5.h"
 #include <iostream>
 #include <random>
+#include "SpaceShip.h"
 class Render
 {
 	public:
@@ -28,6 +29,7 @@ class Render
 		int Gscore;
 		std::vector<Cow> cows;
 		std::vector<Marker> markers;
+		SpaceShip ship;
 		ALLEGRO_TRANSFORM camera;
 		int CowSpawn;
 		ALLEGRO_FONT* F;
