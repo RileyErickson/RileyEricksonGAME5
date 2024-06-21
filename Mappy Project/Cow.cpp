@@ -54,23 +54,18 @@ void Cow::move() {
 	if (curFrame >= 5)
 		fy += 96;
 
-	if (up) {flag = ALLEGRO_FLIP_VERTICAL; }
+	if (!up) {flag = ALLEGRO_FLIP_VERTICAL; }
 	else { flag = 0; }
-	al_draw_filled_circle(PosX, PosY, 10, al_map_rgb(200, 10, 200));
-	al_draw_line(x1, y1, x2, y2, al_map_rgb(200, 0, 0), 3);
 	frame = al_create_sub_bitmap(CSheet, fx, fy, 96, 96);
-	if(x2 > x1)
-		al_draw_rotated_bitmap(frame, 96 / 2, 96 / 2, PosX,PosY, 90 -(x2 - x1), flag);
-	else
-		al_draw_rotated_bitmap(frame, 96 / 2, 96 / 2, PosX, PosY, 90 -(x1 - x2), flag);
+	
+	al_draw_rotated_bitmap(frame, 96 / 2, 96 / 2, PosX,PosY, atan2(y2 - y1, x2 - x1) + 1.57, flag);
+	
 
 }
+//returns true if the provide location is inside the cow
 bool Cow::IsLocation(int x, int y) {
-	if ( 90 > abs(x - (PosX+(96/2)))) {
-		if (90 > abs(y - (PosY + (96 / 2)))) {
-			std::cout << "HIT" << std::endl;
-			return true;
-		}
-	}
+	if (( 90 > abs(x - (PosX+(96/2))))&& (90 > abs(y - (PosY + (96 / 2))))) 
+		return true;
+	
 	return false;
 }

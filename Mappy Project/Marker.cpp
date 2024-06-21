@@ -8,8 +8,8 @@
 	}
 	void Marker::render() {
 		if (time + .2 > al_get_time()) 
-			al_draw_bitmap(Marker1,x, y,0);
+			al_draw_bitmap(Marker1,x- 96/2, y - 96 / 2,0);
 		else 
-			al_draw_bitmap(Marker2, x, y, 0);
+			al_draw_bitmap(Marker2, x - 96 / 2, y - 96 / 2, 0);
 	}
 
