@@ -1,6 +1,8 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 #include "Cow.h"
 #include "mappy_A5.h"
 #include <iostream>
@@ -20,6 +22,8 @@ int main()
     al_init_primitives_addon();
     al_init_font_addon();
     al_init_ttf_addon();
+    al_install_audio();
+    al_init_acodec_addon();
     int width = 800;
     int height = 800;
     int REAL_W = 2880;
@@ -37,6 +41,12 @@ int main()
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     al_register_event_source(event_queue, al_get_mouse_event_source());
     al_start_timer(timer);
+    //sound effect made with https://sfxr.me/
+    //background song made with music lab
+    al_reserve_samples(3);
+    ALLEGRO_SAMPLE* LazerEffect = al_load_sample("explosion.mp3");
+    ALLEGRO_SAMPLE* BackGround = al_load_sample("background.wav");
+    al_play_sample(BackGround, 0.6, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL);
     //main game loop
     Render render;
     while (!done) {
@@ -54,10 +64,11 @@ int main()
 
         //handles taking user movement input
         Movement(ev);
-        //renders lazer beam
+        //records lazer beam location/plays sound effect
         if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN) {
             mouse_x = ev.mouse.x;
             mouse_y = ev.mouse.y;
+            al_play_sample(LazerEffect, 0.8, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
             displayBeam = al_get_time();
         }
         //handles how long to show lazer beam and resets the lazer if its been long enough
@@ -72,7 +83,7 @@ int main()
             render.renderScore(view_x, view_y);
             al_flip_display();
         }
-        if (render.getAllowedTime() <= 0) {
+        if (render.getAllowedTime() - al_get_time() <= 0) {
             done = true;
         }
     }

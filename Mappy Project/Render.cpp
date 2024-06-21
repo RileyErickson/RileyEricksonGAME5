@@ -4,6 +4,7 @@ Render::Render() {
 	//https://www.fontspace.com/hawtpixel-darrell-flood
 	F = al_load_font("AlienMushrooms.ttf", 60, 0);
 	Timer = al_load_font("AlienMushrooms.ttf", 100, 0);
+	moo = al_load_sample("moo.mp3");
 	MapLoad("farm.fmp", 1);
 	CowSpawn = 0;
 	goal = 5;
@@ -47,7 +48,7 @@ void Render::RenderCows(int mouse_x, int mouse_y) {
 				goal += 5;
 				time += 6;
 			}
-			std::cout << score << std::endl;
+			al_play_sample(moo, 0.9, 0.0, 1.7, ALLEGRO_PLAYMODE_ONCE, NULL);
 			break;
 		}
 		loc++;
